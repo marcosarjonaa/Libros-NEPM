@@ -1,67 +1,3 @@
-# Proyecto NEPM Libro
-### Hecho por Marcos Arjona y Daniel Cornejo
-
----
-
-### 1º Instalar dependencias
-Hemos instalado las dependencias correspondientes en el package.json a través de estos comandos: 
-
-```bash 
-npm install --save body-parser
-npm install --save dotenv
-npm install --save express
-npm install --save express-session
-npm install --save mysql2
-npm install --save pug
-```
-
-Y en el archivo 'package.json' se vería asi: 
-```json
-{
-  "dependencies": {
-    "body-parser": "^1.20.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "express-session": "^1.18.1",
-    "mysql2": "^3.11.4",
-    "pug": "^3.0.3"
-  }
-}
-```
-### 2º Creamos las carpetas: controllers, routes y biblioteca.
-
-La carpeta libreria contendrá un archivo docker-compose.yml que se verá de la siguiente manera: 
-
-
-````yml
-
-version: '3.1'
-
-services:
-
-  adminer:
-    image: adminer
-    restart: "no"
-    ports:
-      - ${ADMINER_PORT}:8080
-
-  db-gesaca:
-    image: mysql:latest
-    restart: "no"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    ports:
-      - ${MYSQL_PORT}:3306
-    volumes:
-      - ./scripts:/docker-entrypoint-initdb.d
-
-````
-### BASE DE DATOS
-
-Además la carpeta librería también contendrá otra carpeta llamada scripts en la cual habrá un archivo llamado initdb.sql donde se iniciará nuestra base de datos creando las tablas e insertando los datos, el archivo se ve de esta manera:
-
-
-```sql
 CREATE DATABASE IF NOT EXISTS `libreria`;
 
 USE `libreria`;
@@ -138,7 +74,6 @@ INSERT INTO `autores` (`nombre`,`paisOrigen`) VALUES ('Sofía', 'USA');
 INSERTS DE LA TABLA LIBROS
 */
 
-
 INSERT INTO `libros` (`titulo`, `fPublicacion`, `precio`) VALUES ('Libro1', '2012-12-08', '35.65');
 INSERT INTO `libros` (`titulo`, `fPublicacion`, `precio`) VALUES ('Libro2', '2006-01-02', '97.37');
 INSERT INTO `libros` (`titulo`, `fPublicacion`, `precio`) VALUES ('Libro3', '2020-11-18', '87.73');
@@ -175,7 +110,6 @@ INSERT INTO `clientes` (`nombre`, `correo`) VALUES ('María', 'cliente8@correo.c
 INSERT INTO `clientes` (`nombre`, `correo`) VALUES ('Sofia', 'cliente9@correo.com');
 INSERT INTO `clientes` (`nombre`, `correo`) VALUES ('Carlos', 'cliente10@correo.com');
 
-
 /**
 INSERTS TABLA VENTAS
 */
@@ -195,12 +129,4 @@ INSERT INTO `venta` (`fecha`, `total`) VALUES ('2014-07-30', '155.37');
 INSERT INTO `venta` (`fecha`, `total`) VALUES ('2008-11-26', '70.56');
 INSERT INTO `venta` (`fecha`, `total`) VALUES ('2003-07-29', '109.30');
 INSERT INTO `venta` (`fecha`, `total`) VALUES ('1991-05-27', '257.80');
-
-
-```
-
-Sobre las carpetas routes y controllers crearemos dos archivos .js llamados libreriaRoutes.js y libreriaControllers.js respectivamente.
-
-### libreriaRoutes.js
-
 
