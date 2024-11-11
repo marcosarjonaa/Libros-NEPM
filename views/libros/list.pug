@@ -1,0 +1,28 @@
+
+extends ../templates/layout
+
+block content
+
+        div 
+            h3 listado de libros
+            table(border=1)
+                thead 
+                    tr
+                        th id
+                        th titulo
+                        th fPublicacion
+                        th precio
+                        th borrar 
+                        th editar
+                tbody 
+                    each libro in libros
+                        tr 
+                            td=libro.id
+                            td=libro.nombre                        
+                            td=libro.apellido
+                            td 
+                                a(href=`/libros/del/${libros.id}`) borrar 
+                            td 
+                                a(href=`/libros/edit/${libros.id}`) editar 
+            p 
+                a(href="/libros/add") Añadir un libro nuevo
