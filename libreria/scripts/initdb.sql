@@ -1,12 +1,12 @@
 CREATE DATABASE IF NOT EXISTS `libreria`;
 
-USE `libreria`;
+USE 'libreria';
 
 DROP TABLE IF EXISTS libros;
 DROP TABLE IF EXISTS autores;
 DROP TABLE IF EXISTS ventas;
 DROP TABLE IF EXISTS clientes;
-DROP TABLE IF EXIST ventas_libros
+DROP TABLE IF EXISTS ventas_libros
 
 -- para los logins 
 CREATE TABLE IF NOT EXISTS users (
