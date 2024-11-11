@@ -32,12 +32,12 @@ exports.libroDelFormulario = (req, res) => {
   if (isNaN(id)) res.send('PARAMETROS INCORRECTOS');
   else
     db.query('SELECT * FROM libros WHERE id=?', [id], (error, respuesta) => {
-      if (error) res.send('ERROR al INTENTAR BORRAR EL libro');
+      if (error) res.send('Error al intentar borrar el libro');
       else {
         if (respuesta.length > 0) {
           res.render('libros/del', { libro: respuesta[0] });
         } else {
-          res.send('ERROR al INTENTAR BORRAR EL libro, NO EXISTE');
+          res.send('Error al intentar borrar el libro, no existe');
         }
       }
     });
