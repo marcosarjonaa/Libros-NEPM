@@ -1,0 +1,17 @@
+extends ../templates/layout
+
+block content 
+    h3 Añadir un nuevo libro
+        div 
+            form(action="/libreria/add", method="post") 
+                
+                label(for="titulo") Titulo:
+                input(type="text", name="titulo")
+                br
+                label(for="fPublicacion") Fecha Publicación:
+                input(type="date", name="fPublicacion")                 
+                br   
+                label(for="precio") Precio: 
+                input(type="double", name="precio")
+                br              
+                input(type="submit", value="Enviar")
