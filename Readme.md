@@ -56,7 +56,7 @@ services:
       - ./scripts:/docker-entrypoint-initdb.d
 
 ````
-### BASE DE DATOS
+### 3º BASE DE DATOS
 
 Además la carpeta librería también contendrá otra carpeta llamada scripts en la cual habrá un archivo llamado initdb.sql donde se iniciará nuestra base de datos creando las tablas e insertando los datos, el archivo se ve de esta manera:
 
@@ -201,6 +201,129 @@ INSERT INTO `venta` (`fecha`, `total`) VALUES ('1991-05-27', '257.80');
 
 Sobre las carpetas routes y controllers crearemos dos archivos .js llamados libreriaRoutes.js y libreriaControllers.js respectivamente.
 
-### libreriaRoutes.js
+### 4º Routes y Controllers
 
+Hemos creado los routes tanto de libreria, ventas, autor, clientes. En estos archivos hemos seguido la estructura de los routes y controllers del proyecto NEPM que hicimos con anteriordad, hemos cambiado los nombres para que concuerde con el routes que toque y con los controllers igualmente: 
+
+**Estructura del Routes**
+```js 
+const express = require('express');
+const router = express.Router();
+const nombreDelController = require('../controllers/nombreDelController');
+
+// Ruta para obtener 
+router.get('/', nombreDelController.MetodoDelController);
+
+// Rutas para añadir 
+router.get('/add', nombreDelController.MetodoDelController);
+router.post('/add', nombreDelController.MetodoDelController);
+
+// Rutas para eliminar
+router.get('/del/:id', nombreDelController.MetodoDelController);
+router.post('/del/:id', nombreDelController.MetodoDelController);
+
+// Rutas para editar 
+router.get('/edit/:id', nombreDelController.MetodoDelController);
+router.post('/edit/:id', nombreDelController.MetodoDelController);
+
+module.exports = router;
+
+```
+
+**Estructura del Controller**
+```js
+const db = require('../db'); // Conexión a la base de datos
+
+// Obtener la lista de 
+exports.metodo = (req, res) => {
+  db.query('SELECT * FROM `tabla`', (err, response) => {
+    if (err) res.send('ERROR al hacer la consulta');
+    else res.render('tabla/list', { tabla: response });
+  });
+};
+
+// Formulario para añadir un 
+exports.metodo = (req, res) => {
+  res.render('tabla/add');
+};
+
+// Añadir un nuevo 
+exports.metodo = (req, res) => {
+  const { param, param, param } = req.body;
+  db.query(
+    'INSERT INTO tabla (param, param, param) VALUES (?, ?, ?)',
+    [param, param, param],
+    (error, respuesta) => {
+      if (error) res.send('ERROR INSERTANDO libro: ' + error);
+      else res.redirect('/tabla');
+    }
+  );
+};
+
+// Formulario para eliminar un
+exports.metodo = (req, res) => {
+  const { id } = req.params;
+  if (isNaN(id)) res.send('PARAMETROS INCORRECTOS');
+  else
+    db.query('SELECT * FROM tabla WHERE id=?', [id], (error, respuesta) => {
+      if (error) res.send('Error al intentar borrar el ');
+      else {
+        if (respuesta.length > 0) {
+          res.render('tabla/del', { libro: respuesta[0] });
+        } else {
+          res.send('Error al intentar borrar , no existe');
+        }
+      }
+    });
+};
+
+// Eliminar un 
+exports.metodo = (req, res) => {
+  const { id } = req.body;
+  if (isNaN(id)) res.send('ERROR BORRANDO');
+  else {
+    db.query('DELETE FROM tabla WHERE id=?', [id], (error) => {
+      if (error) res.send('ERROR BORRANDO param de Tabla: ' + error);
+      else res.redirect('/libros');
+    });
+  }
+};
+
+// Formulario para editar un 
+exports.metodo = (req, res) => {
+  const { id } = req.params;
+  if (isNaN(id)) res.send('PARAMETROS INCORRECTOS');
+  else
+    db.query('SELECT * FROM tabla WHERE id=?', [id], (error, respuesta) => {
+      if (error) res.send('ERROR al INTENTAR ACTUALIZAR la tabla');
+      else {
+        if (respuesta.length > 0) {
+          res.render('tabla/edit', { libro: respuesta[0] });
+        } else {
+          res.send('ERROR al INTENTAR ACTUALIZAR la tabla, NO EXISTE');
+        }
+      }
+    });
+};
+
+// Editar un libro
+exports.metodo = (req, res) => {
+  const { param, param, param, param } = req.body;
+
+  if (isNaN(id)) {
+    res.send('ERROR ACTUALIZANDO tabla');
+  } else {
+    db.query(
+      'UPDATE nombreTabla SET param = ?, param = ?, param = ? WHERE id = ?',
+      [param, param, param, id],
+      (error) => {
+        if (error) {
+          res.send('ERROR ACTUALIZANDO cosa: ' + error);
+        } else res.redirect('/cosa');
+      }
+    );
+  }
+};
+
+```
 

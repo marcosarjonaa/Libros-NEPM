@@ -1,15 +1,15 @@
-CREATE DATABASE IF NOT EXISTS `libreria`;
+CREATE DATABASE  `libreria`;
 
-USE 'libreria';
+USE `libreria`;
 
 DROP TABLE IF EXISTS libros;
 DROP TABLE IF EXISTS autores;
 DROP TABLE IF EXISTS ventas;
 DROP TABLE IF EXISTS clientes;
-DROP TABLE IF EXISTS ventas_libros
+DROP TABLE IF EXISTS ventas_libro;
 
 -- para los logins 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE  users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL
@@ -129,4 +129,3 @@ INSERT INTO `venta` (`fecha`, `total`) VALUES ('2014-07-30', '155.37');
 INSERT INTO `venta` (`fecha`, `total`) VALUES ('2008-11-26', '70.56');
 INSERT INTO `venta` (`fecha`, `total`) VALUES ('2003-07-29', '109.30');
 INSERT INTO `venta` (`fecha`, `total`) VALUES ('1991-05-27', '257.80');
-
