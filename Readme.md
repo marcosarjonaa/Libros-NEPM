@@ -230,6 +230,19 @@ module.exports = router;
 
 ```
 
+El listado de los métodos que vamos a usar en cada controller son: 
+|Función|Código|Explicación|
+|---|---|---|
+|.get(/)|exports.x| Hace un select que coge todo lo necesario |
+|.get(/add)|exports.xAddFormulario| Envía a x/add |
+|.post(/add)|exports.xAdd| Hace un insert con  los datos necesarios pasados con anterioridad |
+|.get(/del)|exports.xDelFormulario| Envía a x/del |
+|.post(/del)|exports.xDel| Hace un delete segun el id comprobando que los datos sean correctos y que la persona exista |
+|.get(/edit)|exports.xEditFormulario| Hace una comprabación de existencia de tabla y si no hay fallos de ningún tipo lo manda a edit  |
+|.post(/edit)|exports.xEdit| Hace un update con todos los cambios necesarios |
+
+
+
 **Estructura del Controller**
 ```js
 const db = require('../db'); // Conexión a la base de datos
