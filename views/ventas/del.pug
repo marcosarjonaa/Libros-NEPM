@@ -1,0 +1,17 @@
+extends ../templates/layout
+
+block content 
+    h3 Borrar una venta
+        div 
+            form(method="post") 
+    
+                label(for="fecha") Fecha:
+                input(type="date", name="fecha", value=`${venta.fecha}`,disabled)
+                
+                br
+                label(for="total") Total:
+                input(type="double", name="total", value=`${venta.total}`,disabled)
+                                
+                br
+                input(type="hidden", name="id", value=`${venta.id}`)
+                input(type="submit", value="Enviar")
