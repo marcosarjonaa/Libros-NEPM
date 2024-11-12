@@ -1,12 +1,23 @@
 const db = require('../db'); // Conexión a la base de datos
+const moment = require('moment');  // Importamos moment.js
 
 // Obtener la lista de libros
 exports.libros = (req, res) => {
   db.query('SELECT * FROM `libros`', (err, response) => {
-    if (err) res.send('ERROR al hacer la consulta');
-    else res.render('libros/list', { libros: response });
+    if (err) {
+      res.send('ERROR al hacer la consulta');
+    } else {
+      // Aquí recorremos los libros y formateamos las fechas
+      response.forEach(libro => {
+        if (libro.fPublicacion) { 
+          libro.fPublicacion = moment(libro.fPublicacion).format('YYYY-MM-DD');
+        }
+      });
+      res.render('libros/list', { libros: response });
+    }
   });
 };
+
 
 // Formulario para añadir un libro
 exports.libroAddFormulario = (req, res) => {

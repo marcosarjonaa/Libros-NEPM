@@ -4,24 +4,24 @@ const db = require('../db'); // Conexión a la base de datos
 exports.autores = (req, res) => {
   db.query('SELECT * FROM `autores`', (err, response) => {
     if (err) res.send('ERROR al hacer la consulta');
-    else res.render('autores/list', { autores: response });
+    else res.render('autor/list', { autores: response });
   });
 };
 
 // Formulario para añadir un autor
 exports.autoresAddFormulario = (req, res) => {
-  res.render('autores/add');
+  res.render('autor/add');
 };
 
 // Añadir un nuevo autor
 exports.autoresAdd = (req, res) => {
-  const { nombre, correo } = req.body;
+  const { nombre, paisOrigen } = req.body;
   db.query(
     'INSERT INTO autores (nombre, paisOrigen) VALUES (?, ?)',
     [nombre, paisOrigen],
     (error, respuesta) => {
-      if (error) res.send('ERROR INSERTANDO autores: ' + error);
-      else res.redirect('/autores');
+      if (error) res.send('ERROR INSERTANDO autor: ' + error);
+      else res.redirect('/autor');
     }
   );
 };
@@ -35,9 +35,9 @@ exports.autoresDelFormulario = (req, res) => {
       if (error) res.send('Error al intentar borrar el autor');
       else {
         if (respuesta.length > 0) {
-          res.render('autores/del', { libro: respuesta[0] });
+          res.render('autor/del', { libro: respuesta[0] });
         } else {
-          res.send('Error al intentar borrar el cliente, no existe');
+          res.send('Error al intentar borrar el autor, no existe');
         }
       }
     });
@@ -49,8 +49,8 @@ exports.autoresDel = (req, res) => {
   if (isNaN(id)) res.send('ERROR BORRANDO');
   else {
     db.query('DELETE FROM autores WHERE id=?', [id], (error) => {
-      if (error) res.send('ERROR BORRANDO autores: ' + error);
-      else res.redirect('/autores');
+      if (error) res.send('ERROR BORRANDO autor: ' + error);
+      else res.redirect('/autor');
     });
   }
 };
@@ -64,9 +64,9 @@ exports.autoresEditFormulario = (req, res) => {
       if (error) res.send('ERROR al INTENTAR ACTUALIZAR EL autores');
       else {
         if (respuesta.length > 0) {
-          res.render('autores/edit', { libro: respuesta[0] });
+          res.render('autor/edit', { autor: respuesta[0] });
         } else {
-          res.send('ERROR al INTENTAR ACTUALIZAR EL autores, NO EXISTE');
+          res.send('ERROR al INTENTAR ACTUALIZAR EL autor, NO EXISTE');
         }
       }
     });
@@ -77,7 +77,7 @@ exports.autoresEdit = (req, res) => {
   const { id, nombre, paisOrigen } = req.body;
 
   if (isNaN(id)) {
-    res.send('ERROR ACTUALIZANDO libro');
+    res.send('ERROR ACTUALIZANDO autor');
   } else {
     db.query(
       'UPDATE autores SET nombre = ?, paisOrigen = ? WHERE id = ?',
@@ -85,7 +85,7 @@ exports.autoresEdit = (req, res) => {
       (error) => {
         if (error) {
           res.send('ERROR ACTUALIZANDO autores: ' + error);
-        } else res.redirect('/autores');
+        } else res.redirect('/autor');
       }
     );
   }

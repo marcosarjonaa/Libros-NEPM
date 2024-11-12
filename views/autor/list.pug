@@ -4,7 +4,7 @@ extends ../templates/layout
 block content
 
         div 
-            h3 listado de libros
+            h3 listado de autores
             table(border=1)
                 thead 
                     tr
@@ -14,14 +14,14 @@ block content
                         th borrar 
                         th editar
                 tbody 
-                    each libro in libros
+                    each autor in autores
                         tr 
-                            td=autores.id
-                            td=autores.nombre                        
-                            td=autores.paisOrigen
+                            td=autor.id
+                            td=autor.nombre                        
+                            td=autor.paisOrigen
                             td 
-                                a(href=`/libros/del/${autores.id}`) borrar 
+                                a(href=`/autor/del/${autor.id}`) borrar 
                             td 
-                                a(href=`/libros/edit/${autores.id}`) editar 
+                                a(href=`/autor/edit/${autor.id}`) editar 
             p 
-                a(href="/libros/add") Añadir un autor nuevo
+                a(href="/autor/add") Añadir un autor nuevo

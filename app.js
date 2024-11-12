@@ -36,8 +36,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
  */
 app.use('/libros', libreriaRoutes);
 app.use('/autor', autorRoutes);
-app.use('clientes', clientesRoutes);
-app.use ('ventas',ventasRoutes);
+app.use('/clientes', clientesRoutes);
+app.use ('/ventas',ventasRoutes);
 
 app.get('/', (req, res) => {
     res.render('index')

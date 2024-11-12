@@ -18,11 +18,12 @@ block content
                     each libro in libros
                         tr 
                             td=libro.id
-                            td=libro.nombre                        
-                            td=libro.apellido
+                            td=libro.titulo                        
+                            td=libro.fPublicacion
+                            td=libro.precio
                             td 
-                                a(href=`/libros/del/${libros.id}`) borrar 
+                                a(href=`/libros/del/${libro.id}`) borrar 
                             td 
-                                a(href=`/libros/edit/${libros.id}`) editar 
+                                a(href=`/libros/edit/${libro.id}`) editar 
             p 
                 a(href="/libros/add") Añadir un libro nuevo
