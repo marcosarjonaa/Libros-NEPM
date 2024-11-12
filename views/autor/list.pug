@@ -1,0 +1,27 @@
+
+extends ../templates/layout
+
+block content
+
+        div 
+            h3 listado de libros
+            table(border=1)
+                thead 
+                    tr
+                        th id
+                        th nombre
+                        th paisOrigen
+                        th borrar 
+                        th editar
+                tbody 
+                    each libro in libros
+                        tr 
+                            td=autores.id
+                            td=autores.nombre                        
+                            td=autores.paisOrigen
+                            td 
+                                a(href=`/libros/del/${autores.id}`) borrar 
+                            td 
+                                a(href=`/libros/edit/${autores.id}`) editar 
+            p 
+                a(href="/libros/add") Añadir un autor nuevo
