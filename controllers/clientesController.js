@@ -4,7 +4,7 @@ const db = require('../db'); // Conexión a la base de datos
 exports.clientes = (req, res) => {
   db.query('SELECT * FROM `clientes`', (err, response) => {
     if (err) res.send('ERROR al hacer la consulta');
-    else res.render('clientes/list', { libros: response });
+    else res.render('clientes/list', { clientes: response });
   });
 };
 
@@ -18,7 +18,7 @@ exports.clientesAdd = (req, res) => {
   const { nombre, correo } = req.body;
   db.query(
     'INSERT INTO clientes (nombre, correo) VALUES (?, ?)',
-    [titulo, fPublicacion, precio],
+    [nombre, correo],
     (error, respuesta) => {
       if (error) res.send('ERROR INSERTANDO clientes: ' + error);
       else res.redirect('/clientes');

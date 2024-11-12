@@ -5,12 +5,12 @@ block content
         div 
             form(method="post") 
                 label(for="nombre") nombre:
-                input(type="text", name="nombre", value=`${clientes.nombre}`)
+                input(type="text", name="nombre", value=`${cliente.nombre}`)
                 
                 br
                 label(for="correo") Correo:
-                input(type="text", name="correo", value=`${clientes.correo}`)
+                input(type="text", name="correo", value=`${cliente.correo}`)
                 
                 br
-                input(type="hidden", name="id", value=`${clientes.id}`)
+                input(type="hidden", name="id", value=`${cliente.id}`)
                 input(type="submit", value="Enviar")
