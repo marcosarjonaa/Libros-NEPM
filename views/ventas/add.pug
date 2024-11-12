@@ -1,0 +1,14 @@
+extends ../templates/layout
+
+block content 
+    h3 Añadir una nueva venta
+        div 
+            form(action="/venta/add", method="post") 
+                
+                label(for="fecha") Fecha:
+                input(type="date", name="fecha")
+                br
+                label(for="total") Total:
+                input(type="double", name="total")                 
+                br              
+                input(type="submit", value="Enviar")

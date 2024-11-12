@@ -1,0 +1,27 @@
+
+extends ../templates/layout
+
+block content
+
+        div 
+            h3 listado de ventas
+            table(border=1)
+                thead 
+                    tr
+                        th id
+                        th fecha
+                        th total
+                        th borrar 
+                        th editar
+                tbody 
+                    each vent in venta
+                        tr 
+                            td=vent.id
+                            td=vent.fecha                       
+                            td=vent.total
+                            td 
+                                a(href=`/venta/del/${vent.id}`) borrar 
+                            td 
+                                a(href=`/venta/edit/${vent.id}`) editar 
+            p 
+                a(href="/venta/add") Añadir una venta nueva

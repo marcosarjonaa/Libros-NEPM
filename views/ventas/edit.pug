@@ -1,0 +1,15 @@
+extends ../templates/layout
+
+block content 
+    h3 Editar una venta
+            form(method="post") 
+                label(for="fecha") Fecha:
+                input(type="date", name="fecha", value=`${venta.fecha}`)
+                
+                br
+                label(for="total") Total:
+                input(type="double", name="total", value=`${venta.total}`)
+                
+                br
+                input(type="hidden", name="id", value=`${venta.id}`)
+                input(type="submit", value="Enviar")
