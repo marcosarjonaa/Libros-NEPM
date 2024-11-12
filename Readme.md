@@ -339,4 +339,123 @@ exports.metodo = (req, res) => {
 };
 
 ```
+### 5º Crear la carpeta views
 
+Desde la carpeta raíz creamos una carpeta llamada views, dentro de ella vamos a añadir los diferentes views que se verán en pantalla al ejecutar el app.js siendo en este caso: autor, clientes, libros y ventas; además de estos tenemos que crear también las carpetas: templates que contendrá una serie de pugs para el formato y una css que contendrá una hoja de estilos; y para acabar un pug llamado index.pug. 
+
+A continuación mostraré como se ve el index.pug ya que es extremadamente complicado y es fácil perderse (ironía):
+
+```pug
+extends templates/layout
+
+block content
+  
+  h3 Bienvenido a Libreria Mardá
+  p Seleccione una opción de la lista para continuar
+
+```
+
+
+### 6º Vista de los diferentes pugs:
+
+#### Autor 
+---
+##### add.pug:
+Haremos uso de form el cual accederá a la base de datos libreria, después haciendo uso de varios label (que contendran el campo especifico de la tabla) e imputs (que contendran el tipo de dato que se procesa), podremos añadir tantos autores como queramos rellenando los datos que se nos piden, en este caso el nombre y su país de origen 
+
+```pug
+extends ../templates/layout
+
+block content 
+    h3 Añadir un nuevo autor
+        div 
+            form(action="/libreria/add", method="post") 
+                
+                label(for="nombre") Nombre:
+                input(type="text", name="nombre")
+                br
+                label(for="paisOrigen") Pais de origen:
+                input(type="text", name="paisOrigen")                 
+                br              
+                input(type="submit", value="Enviar")
+
+```
+
+##### del.pug
+
+```pug 
+extends ../templates/layout
+
+block content 
+    h3 Borrar un autor
+        div 
+            form(method="post") 
+    
+                label(for="nombre") Nombre:
+                input(type="text", name="nombre", value=`${autores.nombre}`,disabled)
+                
+                br
+                label(for="paisOrigen") Fecha Publicacion:
+                input(type="text", name="paisOrigen", value=`${autores.paisOrigen}`,disabled)
+                                
+                br
+                input(type="hidden", name="id", value=`${autores.id}`)
+                input(type="submit", value="Enviar")
+```
+
+##### edit.pug 
+
+```pug
+extends ../templates/layout
+
+block content 
+    h3 Editar un autor
+        div 
+            form(method="post") 
+                label(for="nombre") Nombre:
+                input(type="text", name="nombre", value=`${autores.nombre}`)
+                
+                br
+                label(for="paisOrigen") Pais de Origen:
+                input(type="date", name="paisOrigen", value=`${autores.paisOrigen}`)
+                
+                br
+                input(type="hidden", name="id", value=`${autores.id}`)
+                input(type="submit", value="Enviar")
+
+```
+
+
+##### list.pug
+
+```pug 
+extends ../templates/layout
+
+block content
+
+        div 
+            h3 listado de libros
+            table(border=1)
+                thead 
+                    tr
+                        th id
+                        th nombre
+                        th paisOrigen
+                        th borrar 
+                        th editar
+                tbody 
+                    each autor in autores
+                        tr 
+                            td=autor.id
+                            td=autor.nombre                        
+                            td=autor.paisOrigen
+                            td 
+                                a(href=`/autores/del/${autor.id}`) borrar 
+                            td 
+                                a(href=`/autores/edit/${autor.id}`) editar 
+            p 
+                a(href="/autores/add") Añadir un autor nuevo
+```
+
+
+Para los pug de clientes, libros y ventas solo hay que modificar ligeramente los datos pero la estructura sigue siendo la misma mostrada anteriormente para todos ellos

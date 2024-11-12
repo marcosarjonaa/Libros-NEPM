@@ -1,0 +1,16 @@
+extends ../templates/layout
+
+block content 
+    h3 Editar un libro
+        div 
+            form(method="post") 
+                label(for="nombre") nombre:
+                input(type="text", name="nombre", value=`${clientes.nombre}`)
+                
+                br
+                label(for="correo") Correo:
+                input(type="text", name="correo", value=`${clientes.correo}`)
+                
+                br
+                input(type="hidden", name="id", value=`${clientes.id}`)
+                input(type="submit", value="Enviar")
