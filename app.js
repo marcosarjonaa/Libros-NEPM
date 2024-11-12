@@ -7,7 +7,7 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const libreriaRouter = require('./routes/libreriaRoutes');
+const libreriaRoutes = require('./routes/libreriaRoutes');
 const autorRoutes = require('./routes/autorRoutes');
 const clientesRoutes = require('./routes/clientesRoutes');
 const ventasRoutes = require('./routes/ventasRoutes');
@@ -36,8 +36,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
  */
 app.use('/libros', libreriaRoutes);
 app.use('/autor', autorRoutes);
-app.use('clientes', clientesRoutes);
-app.use ('ventas',ventasRoutes);
+app.use('/clientes', clientesRoutes);
+app.use ('/ventas',ventasRoutes);
 
 app.get('/', (req, res) => {
     res.render('index')
