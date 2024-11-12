@@ -5,16 +5,16 @@ block content
         div 
             form(method="post") 
                 label(for="titulo") Titulo:
-                input(type="text", name="titulo", value=`${libros.titulo}`,disabled)
+                input(type="text", name="titulo", value=`${libro.titulo}`,disabled)
                 
                 br
                 label(for="fPublicacion") Fecha Publicacion:
-                input(type="date", name="fPublicacion", value=`${libros.fPublicacion}`,disabled)
+                input(type="date", name="fPublicacion", value=`${libro.fPublicacion}`,disabled)
                 
                 br
                 label(for="precio") Precio: 
-                input(type="double", name="precio", value=`${libros.precio}`,disabled) 
+                input(type="double", name="precio", value=`${libro.precio}`,disabled) 
                 
                 br
-                input(type="hidden", name="id", value=`${libros.id}`)
+                input(type="hidden", name="id", value=`${libro.id}`)
                 input(type="submit", value="Enviar")
