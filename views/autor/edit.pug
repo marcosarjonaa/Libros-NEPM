@@ -1,0 +1,16 @@
+extends ../templates/layout
+
+block content 
+    h3 Editar un autor
+        div 
+            form(method="post") 
+                label(for="nombre") Nombre:
+                input(type="text", name="nombre", value=`${autores.nombre}`)
+                
+                br
+                label(for="paisOrigen") Pais de Origen:
+                input(type="date", name="paisOrigen", value=`${autores.paisOrigen}`)
+                
+                br
+                input(type="hidden", name="id", value=`${autores.id}`)
+                input(type="submit", value="Enviar")

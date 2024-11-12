@@ -1,0 +1,17 @@
+extends ../templates/layout
+
+block content 
+    h3 Borrar un autor
+        div 
+            form(method="post") 
+    
+                label(for="nombre") Nombre:
+                input(type="text", name="nombre", value=`${autores.nombre}`,disabled)
+                
+                br
+                label(for="paisOrigen") Fecha Publicacion:
+                input(type="text", name="paisOrigen", value=`${autores.paisOrigen}`,disabled)
+                                
+                br
+                input(type="hidden", name="id", value=`${autores.id}`)
+                input(type="submit", value="Enviar")

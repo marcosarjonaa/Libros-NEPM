@@ -1,0 +1,14 @@
+extends ../templates/layout
+
+block content 
+    h3 Añadir un nuevo autor
+        div 
+            form(action="/libreria/add", method="post") 
+                
+                label(for="nombre") Nombre:
+                input(type="text", name="nombre")
+                br
+                label(for="paisOrigen") Pais de origen:
+                input(type="text", name="paisOrigen")                 
+                br              
+                input(type="submit", value="Enviar")
