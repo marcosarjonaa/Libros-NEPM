@@ -7,7 +7,7 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const libreriaRouter = require('./routes/libreriaRoutes');
+const libreriaRoutes = require('./routes/libreriaRoutes');
 const autorRoutes = require('./routes/autorRoutes');
 const clientesRoutes = require('./routes/clientesRoutes');
 const ventasRoutes = require('./routes/ventasRoutes');

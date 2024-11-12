@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const libreriaController = require('../controllers/libreriaController');
+const libreriaController = require('../controllers/libroController');
 
 // Ruta para obtener la lista de libros
 router.get('/', libreriaController.libros);
