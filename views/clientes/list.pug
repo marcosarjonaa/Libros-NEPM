@@ -25,3 +25,37 @@ block content
                                 a(href=`/clientes/edit/${cliente.id}`) editar 
             p 
                 a(href="/clientes/add") Añadir un cliente nuevo
+<!-- Maestro detalle --> 
+        div(class="container")
+            h3 Listado de clientes por nombre  
+                each cliente in clientes
+                    if cliente.id == idCliente
+                        span #{cliente.nombre}                    
+            div(class="container")  
+                form(id="clienteForm")
+                    p Seleccione otro nombre para ver las id de las personas que coinciden: 
+                    select.form-select(name="nombre" id="nombre") 
+                        each cliente in clientes
+                            if cliente.id == idCliente
+                                val clienteNombre = cliente.nombre
+                                option(value=`${cliente.id}` selected) #{cliente.nombre}
+                            else 
+                                option(value=`${cliente.id}`) #{cliente.nombre}
+            br
+            div(class="container") 
+                table(class="table")
+                    thead 
+                        tr
+                            th id
+                            th nombre 
+                            th correo
+                    tbody 
+                        each cliente in clientes
+                            if cliente.nombre = clienteNombre
+                                tr 
+                                    td=cliente.id
+                                    td=cliente.nombre                        
+                                    td=cliente.correo
+
+                                    div(class="container")
+                script(src="/js/matriculas.js", type="text/javascript") 
