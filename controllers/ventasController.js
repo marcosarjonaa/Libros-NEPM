@@ -1,10 +1,18 @@
 const db = require('../db'); // Conexión a la base de datos
+const moment = require('moment'); 
 
 // Obtener la lista de ventas
 exports.ventas = (req, res) => {
   db.query('SELECT * FROM `venta`', (err, response) => {
     if (err) res.send('ERROR al hacer la consulta');
-    else res.render('venta/list', { venta: response });
+    else {
+      response.forEach(venta => {
+        if (venta.fecha) { 
+          venta.fecha = moment(venta.fecha).format('YYYY-MM-DD');
+        }
+      });
+      res.render('venta/list', { venta: response });
+    }
   });
 };
 
@@ -50,7 +58,7 @@ exports.ventasDel = (req, res) => {
   else {
     db.query('DELETE FROM venta WHERE id=?', [id], (error) => {
       if (error) res.send('ERROR BORRANDO venta: ' + error);
-      else res.redirect('/venta');
+      else res.redirect('/ventas');
     });
   }
 };
@@ -64,7 +72,7 @@ exports.ventasEditFormulario = (req, res) => {
       if (error) res.send('ERROR al INTENTAR ACTUALIZAR LA venta');
       else {
         if (respuesta.length > 0) {
-          res.render('venta/edit', { libro: respuesta[0] });
+          res.render('venta/edit', { venta: respuesta[0] });
         } else {
           res.send('ERROR al INTENTAR ACTUALIZAR LA venta, NO EXISTE');
         }
