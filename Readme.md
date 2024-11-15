@@ -462,3 +462,4 @@ Para los pug de clientes, libros y ventas solo hay que modificar ligeramente los
 
 
 ### 7º Maestro detalle
+Hemos creado el maestro detalle 
