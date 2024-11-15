@@ -35,7 +35,7 @@ exports.clientesDelFormulario = (req, res) => {
       if (error) res.send('Error al intentar borrar el cliente');
       else {
         if (respuesta.length > 0) {
-          res.render('clientes/del', { libro: respuesta[0] });
+          res.render('clientes/del', { clientes: respuesta[0] });
         } else {
           res.send('Error al intentar borrar el cliente, no existe');
         }
@@ -64,7 +64,7 @@ exports.clientesEditFormulario = (req, res) => {
       if (error) res.send('ERROR al INTENTAR ACTUALIZAR EL cliente');
       else {
         if (respuesta.length > 0) {
-          res.render('clientes/edit', { libro: respuesta[0] });
+          res.render('clientes/edit', { clientes: respuesta[0] });
         } else {
           res.send('ERROR al INTENTAR ACTUALIZAR EL cliente, NO EXISTE');
         }
@@ -75,13 +75,12 @@ exports.clientesEditFormulario = (req, res) => {
 // Editar un cliente
 exports.clientesEdit = (req, res) => {
   const { id, nombre, correo } = req.body;
-
   if (isNaN(id)) {
-    res.send('ERROR ACTUALIZANDO libro');
+    res.send('ERROR ACTUALIZANDO cliente');
   } else {
     db.query(
       'UPDATE clientes SET nombre = ?, correo = ? WHERE id = ?',
-      [nombre, correo, precio, id],
+      [nombre, correo, id],
       (error) => {
         if (error) {
           res.send('ERROR ACTUALIZANDO cliente: ' + error);
