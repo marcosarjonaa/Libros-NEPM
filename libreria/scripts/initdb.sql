@@ -44,13 +44,13 @@ CREATE TABLE venta (
 	total DECIMAL(10, 2) NOT NULL
 );
 
-CREATE TABLE venta_libro (
-	id_venta INT NOT NULL,
-	id_libro INT NOT NULL,
-	PRIMARY KEY (id_venta, id_libro),
-	FOREIGN KEY (id_venta) REFERENCES venta(id),
-	FOREIGN KEY (id_libro) REFERENCES libros(id)
-);
+-- CREATE TABLE venta_libro (
+-- 	id_venta INT NOT NULL,
+-- 	id_libro INT NOT NULL,
+-- 	PRIMARY KEY (id_venta, id_libro),
+-- 	FOREIGN KEY (id_venta) REFERENCES venta(id),
+-- 	FOREIGN KEY (id_libro) REFERENCES libros(id)
+-- );
 
 
 -- para que los acentos salgan bien
