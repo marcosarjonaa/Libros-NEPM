@@ -460,6 +460,55 @@ block content
 
 Para los pug de clientes, libros y ventas solo hay que modificar ligeramente los datos pero la estructura sigue siendo la misma mostrada anteriormente.
 
-
 ### 7º Maestro detalle
-Hemos creado el maestro detalle 
+En el list de clientes hemos planteado el maestro detalle para que podamos ver los clientes y toda su información según su nombre. 
+
+Si hay 8 personas llamadas Laura , se mostrará la información de esas 8 personas. 
+
+El código que hemos usado es en el list.js de clientes es: 
+
+```js
+<!-- Maestro detalle --> 
+        div(class="container")
+            h3 Listado de clientes por nombre  
+                each cliente in clientes
+                    if cliente.id == idCliente
+                        span #{cliente.nombre}                    
+            div(class="container")  
+                form(id="clienteForm")
+                    p Seleccione otro nombre para ver las id de las personas que coinciden: 
+                    select.form-select(name="nombre" id="nombre") 
+                        each cliente in clientes
+                            if cliente.id == idCliente
+                                val clienteNombre = cliente.nombre
+                                option(value=`${cliente.id}` selected) #{cliente.nombre}
+                            else 
+                                option(value=`${cliente.id}`) #{cliente.nombre}
+            br
+            div(class="container") 
+                table(class="table")
+                    thead 
+                        tr
+                            th id
+                            th nombre 
+                            th correo
+                    tbody 
+                        each cliente in clientes
+                            if cliente.nombre == clienteNombre
+                                tr 
+                                    td=cliente.id
+                                    td=cliente.nombre                        
+                                    td=cliente.correo
+
+  div(class="container")
+    script(src="/js/clientres.js", type="text/javascript") 
+```
+Tambien hemos creado una ruta en el clientesRoutes.js que es:
+```js
+  router.get('/clientes_por_nombre', clientesController.clientesPorNombres);
+```
+
+Y en el clientesController hemos puesto: 
+```js
+
+```
