@@ -89,3 +89,36 @@ exports.clientesEdit = (req, res) => {
     );
   }
 };
+
+  exports.clientesPorNombre = (req, res) => {
+    if (isNaN(req.params.id))
+      res.send('Error al buscar la asignatura')
+    else {
+      db.query(
+        'SELECT * FROM `clientes` ',
+        (error, listaClientes) => {
+          if (!error) {            
+              db.query(
+                'SELECT * ' +
+                'FROM clientes' +
+                'WHERE id = ? ',
+                [req.params.id],
+                (err, listaClientes) => {
+                  if (err) res.send('ERROR al hacer la consulta')
+                  else {
+                    res.render('clientes/clientesPorNombre', 
+                      { 
+                        nombre: listaClientes, 
+                        correo: listaCorreo, 
+                        idCliente: req.params.id , 
+                      user: req.session.user})
+                  }
+                }
+              );
+            } else {
+              res.send('La asignatura no tiene alumnos matriculados');
+            }        
+        }
+      );
+    };
+  };
