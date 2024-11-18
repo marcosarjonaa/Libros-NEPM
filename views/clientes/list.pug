@@ -25,7 +25,8 @@ block content
                                 a(href=`/clientes/edit/${cliente.id}`) editar 
             p 
                 a(href="/clientes/add") Añadir un cliente nuevo
-<!-- Maestro detalle --> 
+
+
         div(class="container")
             h3 Listado de clientes por nombre  
                 each cliente in clientes
@@ -57,5 +58,5 @@ block content
                                     td=cliente.nombre                        
                                     td=cliente.correo
 
-                                    div(class="container")
-                script(src="/js/matriculas.js", type="text/javascript") 
+            div(class="container")
+                script(src="./js/clientes.js", type="text/javascript") 
