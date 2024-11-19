@@ -19,6 +19,6 @@ router.post('/edit/:id', clientesController.clientesEdit);
 
 
 
-router.get('/clientes_por_nombre', clientesController.clientesPorNombre)
+router.get('/clientesNombre', clientesController.clientesPorNombre)
 
 module.exports = router;
