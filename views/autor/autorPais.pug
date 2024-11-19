@@ -1,0 +1,33 @@
+extends ../templates/layout
+
+block content
+    div
+        h3 Listado de Autores por Pais  
+            each autor in autores
+                if autor.paisOrigen == paisOrigen
+                    autor.paisOrigen
+        div 
+            form(id="autorForm")
+                p Seleccione otro nombre para ver las id de las personas que coinciden: 
+                select.form-select(name="paisOrigen" id="paisOrigen") 
+                    each autor in listaAutor
+                        if autor.paisOrigen == paisOrigen
+                            option(value=`${autor.paisOrigen}` selected) #{autor.paisOrigen}
+                        else 
+                            option(value=`${autor.paisOrigen}`) #{autor.paisOrigen}
+        br
+        div
+            table(class="table")
+                thead 
+                    tr
+                        th id
+                        th nombre 
+                        th paisOrigen
+                tbody 
+                    each autor in autores
+                        tr 
+                            td=autor.id
+                            td=autor.nombre                        
+                            td=autor.paisOrigen
+
+    script(src="public/js/autor.js" type="text/javascript") 
