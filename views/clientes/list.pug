@@ -13,6 +13,7 @@ block content
                         th correo
                         th borrar 
                         th editar
+                        th Clientes por nombre
                 tbody 
                     each cliente in clientes 
                         tr 
@@ -23,40 +24,9 @@ block content
                                 a(href=`/clientes/del/${cliente.id}`) borrar 
                             td 
                                 a(href=`/clientes/edit/${cliente.id}`) editar 
+                            td 
+                                a(href=`/clientes/clientesNombre/${clientes.nombre}`) Clientes por nombres
             p 
                 a(href="/clientes/add") Añadir un cliente nuevo
-
-
-        div(class="container")
-            h3 Listado de clientes por nombre  
-                each cliente in clientes
-                    if cliente.id == idCliente
-                        span #{cliente.nombre}                    
-            div(class="container")  
-                form(id="clienteForm")
-                    p Seleccione otro nombre para ver las id de las personas que coinciden: 
-                    select.form-select(name="nombre" id="nombre") 
-                        each cliente in clientes
-                            if cliente.id == idCliente
-                                val clienteNombre = cliente.nombre
-                                option(value=`${cliente.id}` selected) #{cliente.nombre}
-                            else 
-                                option(value=`${cliente.id}`) #{cliente.nombre}
-            br
-            div(class="container") 
-                table(class="table")
-                    thead 
-                        tr
-                            th id
-                            th nombre 
-                            th correo
-                    tbody 
-                        each cliente in clientes
-                            if cliente.nombre = clienteNombre
-                                tr 
-                                    td=cliente.id
-                                    td=cliente.nombre                        
-                                    td=cliente.correo
-
-            div(class="container")
-                script(src="./js/clientes.js", type="text/javascript") 
+                                    
+        script(src="/js/clientes.js", type="text/javascript") 
