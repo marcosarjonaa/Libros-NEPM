@@ -17,5 +17,6 @@ router.post('/del/:id', autorController.autoresDel);
 router.get('/edit/:id', autorController.autoresEditFormulario);
 router.post('/edit/:id', autorController.autoresEdit);
 
+router.get('/autoresPorPais/:paisOrigen', autorController.autoresPorPais)
 
 module.exports = router;
