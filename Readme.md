@@ -465,27 +465,28 @@ En el list de clientes hemos planteado el maestro detalle para que podamos ver l
 
 Si hay 8 personas llamadas Laura , se mostrará la información de esas 8 personas. 
 
-El código que hemos usado es en el list.js de clientes es: 
+El código que hemos usado es en el clientesNombre.js o autorPorPais de clientes es: 
 
-```js
-<!-- Maestro detalle --> 
-        div(class="container")
+```pug       
+    extends ../templates/layout
+
+    block content
+        div
             h3 Listado de clientes por nombre  
-                each cliente in clientes
-                    if cliente.id == idCliente
-                        span #{cliente.nombre}                    
-            div(class="container")  
-                form(id="clienteForm")
+                each cliente in listaCliente
+                    if cliente.nombre == nombre
+                        #{cliente.nombre}
+            div 
+                form(id="clientesForm")
                     p Seleccione otro nombre para ver las id de las personas que coinciden: 
                     select.form-select(name="nombre" id="nombre") 
-                        each cliente in clientes
-                            if cliente.id == idCliente
-                                val clienteNombre = cliente.nombre
-                                option(value=`${cliente.id}` selected) #{cliente.nombre}
+                        each cliente in listaTClientes
+                            if cliente.nombre == nombre
+                                option(value=`${cliente.nombre}` selected) #{cliente.nombre}
                             else 
-                                option(value=`${cliente.id}`) #{cliente.nombre}
+                                option(value=`${cliente.nombre}`) #{cliente.nombre}
             br
-            div(class="container") 
+            div
                 table(class="table")
                     thead 
                         tr
@@ -493,22 +494,51 @@ El código que hemos usado es en el list.js de clientes es:
                             th nombre 
                             th correo
                     tbody 
-                        each cliente in clientes
-                            if cliente.nombre == clienteNombre
-                                tr 
-                                    td=cliente.id
-                                    td=cliente.nombre                        
-                                    td=cliente.correo
+                        each cliente in listaCliente
+                            tr 
+                                td=cliente.id
+                                td=cliente.nombre                        
+                                td=cliente.correo
 
-  div(class="container")
-    script(src="/js/clientres.js", type="text/javascript") 
+        script(src="/js/clientes.js" type="text/javascript") 
 ```
 Tambien hemos creado una ruta en el clientesRoutes.js que es:
 ```js
-  router.get('/clientes_por_nombre', clientesController.clientesPorNombres);
+  router.get('/clientesPorNombre', clientesController.clientesPorNombres);
 ```
 
 Y en el clientesController hemos puesto: 
 ```js
-  
+  exports.clientesPorNombre = (req, res) => {
+  db.query(
+    'SELECT * FROM `clientes` ',
+    (error, listaTCliente) => {
+      if (!error) {
+        db.query(
+          'SELECT * FROM `clientes` WHERE nombre = ? ',
+          [req.params.nombre],
+          (err, listaCliente) => {
+            if (err) res.send('ERROR al hacer la consulta')
+            else {
+              res.render('clientes/clientesNombre',
+                {
+                  nombre: req.params.nombre,
+                  listaCliente: listaCliente,
+                  listaTClientes: listaTCliente
+                })
+            }
+          }
+        );
+      } else {
+        res.send('La asignatura no tiene alumnos matriculados');
+      }
+    }
+  );
+};
 ```
+
+Para hacer el maestro detalle de autor , es el mismo planteamiento que con cliente pero cambiando las variables necesarias.
+
+---
+
+### Hecho por Daniel Cornejo y Marcos Arjona
