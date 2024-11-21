@@ -4,14 +4,14 @@ extends ../templates/layout
 block content
     div
         h3 Listado de clientes por nombre  
-            each cliente in clientes
+            each cliente in listaCliente
                 if cliente.nombre == nombre
                     #{cliente.nombre}
         div 
             form(id="clientesForm")
                 p Seleccione otro nombre para ver las id de las personas que coinciden: 
                 select.form-select(name="nombre" id="nombre") 
-                    each cliente in listaCliente
+                    each cliente in listaTClientes
                         if cliente.nombre == nombre
                             option(value=`${cliente.nombre}` selected) #{cliente.nombre}
                         else 
@@ -25,7 +25,7 @@ block content
                         th nombre 
                         th correo
                 tbody 
-                    each cliente in clientes
+                    each cliente in listaCliente
                         tr 
                             td=cliente.id
                             td=cliente.nombre                        

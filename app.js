@@ -19,8 +19,8 @@ require('dotenv').config({ path: './libreria/.env' });
  */
 const app = express();
 const port = process.env.SERVICE_PORT;
-app.use(express.static('public'));
 
+app.use(express.static('public'));
 /**
 
 /**

@@ -4,7 +4,7 @@ window.document.addEventListener("change", (ev) => {
     let nombreCliente = seleccion.options[seleccion.selectedIndex].value;
     document.getElementById(
         "clientesForm").setAttribute(
-            "action", "/clientes/" + "clientesNombre/"+
-            nombreCliente);
+            "action", "/clientes/clientesNombre/" +
+             nombreCliente);
     document.getElementById("clientesForm").submit();
 });

@@ -93,19 +93,19 @@ exports.clientesEdit = (req, res) => {
 exports.clientesPorNombre = (req, res) => {
   db.query(
     'SELECT * FROM `clientes` ',
-    (error, listaCliente) => {
+    (error, listaTCliente) => {
       if (!error) {
         db.query(
           'SELECT * FROM `clientes` WHERE nombre = ? ',
           [req.params.nombre],
-          (err, listaClientes) => {
+          (err, listaCliente) => {
             if (err) res.send('ERROR al hacer la consulta')
             else {
               res.render('clientes/clientesNombre',
                 {
                   nombre: req.params.nombre,
-                  clientes: listaClientes,
-                  listaCliente: listaCliente
+                  listaCliente: listaCliente,
+                  listaTClientes: listaTCliente
                 })
             }
           }
