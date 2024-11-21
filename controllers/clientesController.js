@@ -91,54 +91,21 @@ exports.clientesEdit = (req, res) => {
 };
 
 exports.clientesPorNombre = (req, res) => {
-<<<<<<< HEAD
-  if (isNaN(req.params.id))
-    res.send('Error al buscar la asignatura')
-  else {
-    db.query(
-      'SELECT * FROM `clientes` ',
-      (error) => {
-        if (!error) {
-          db.query(
-            'SELECT * ' +
-            'FROM clientes' +
-            'WHERE nombre = ? ',
-            [req.params.nombre],
-            (err, listaClientes) => {
-              if (err) res.send('ERROR al hacer la consulta')
-              else {
-                res.render('clientes/clientesPorNombre',
-                  {
-                    nombre: req.paramas.nombre,
-                    correo: listaCLientes,
-                    idCliente: listaClientes,
-                    user: req.session.user
-                  })
-              }
-            }
-          );
-        } else {
-          res.send('La asignatura no tiene alumnos matriculados');
-        }
-      }
-    );
-  };
-=======
   db.query(
     'SELECT * FROM `clientes` ',
-    (error, listaCliente) => {
+    (error, listaTCliente) => {
       if (!error) {
         db.query(
           'SELECT * FROM `clientes` WHERE nombre = ? ',
           [req.params.nombre],
-          (err, listaClientes) => {
+          (err, listaCliente) => {
             if (err) res.send('ERROR al hacer la consulta')
             else {
               res.render('clientes/clientesNombre',
                 {
                   nombre: req.params.nombre,
-                  clientes: listaClientes,
-                  listaCliente: listaCliente
+                  listaCliente: listaCliente,
+                  listaTClientes: listaTCliente
                 })
             }
           }
@@ -148,5 +115,4 @@ exports.clientesPorNombre = (req, res) => {
       }
     }
   );
->>>>>>> e4ca330f035fb790010bc336d4810f23e177e4e2
 };

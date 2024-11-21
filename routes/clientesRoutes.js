@@ -17,13 +17,7 @@ router.post('/del/:id', clientesController.clientesDel);
 router.get('/edit/:id', clientesController.clientesEditFormulario);
 router.post('/edit/:id', clientesController.clientesEdit);
 
-<<<<<<< HEAD
-
-
-router.get('/clientesNombre', clientesController.clientesPorNombre)
-=======
 //Maestro Detalle
 router.get('/clientesNombre/:nombre', clientesController.clientesPorNombre)
->>>>>>> e4ca330f035fb790010bc336d4810f23e177e4e2
 
 module.exports = router;
