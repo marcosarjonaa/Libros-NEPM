@@ -1,65 +1,29 @@
-
 extends ../templates/layout
 
 block content
 
-        div 
-            h3 listado de autores
-            table(border=1)
-                thead 
-                    tr
-                        th id
-                        th nombre
-                        th paisOrigen
-                        th borrar 
-                        th editar
-                tbody 
-                    each autor in autores
-                        tr 
-                            td=autor.id
-                            td=autor.nombre                        
-                            td=autor.paisOrigen
-                            td 
-                                a(href=`/autor/del/${autor.id}`) borrar 
-                            td 
-                                a(href=`/autor/edit/${autor.id}`) editar 
-            p 
-                a(href="/autor/add") Añadir un autor nuevo
-
-                 div(class="container")
-           
-            h3 Listado de autores por pais  
+    div 
+        h3 listado de autores
+        table(border=1)
+            thead 
+                tr
+                    th id
+                    th nombre
+                    th paisOrigen
+                    th borrar 
+                    th editar
+                    th Maestro Detalle 
+            tbody 
                 each autor in autores
-                    if autor.id == idAutor
-                        span #{autor.nombre}                    
-            div(class="container")  
-                form(id="autorForm")
-                 
-                    select.form-select(name="paisOrigen" id="paisOrigen") 
-                        each autor in autores
-                            if autor.id == idAutor
-                                val autorNombre = autor.paisOrigen
-                                option(value=`${autor.id}` selected) #{autor.paisOrigen}
-                            else 
-                                option(value=`${autor.id}`) #{autor.paisOrigen}
-            br
-            div(class="container") 
-                table(class="table")
-                    thead 
-                        tr
-                            th id
-                            th nombre 
-                            th paisOrigen
-                            th autor por pais
-                    tbody 
-                        each autor in autores
-                            if autor.nombre = autorNombre
-                                tr 
-                                    td=autor.id
-                                    td=autor.nombre                        
-                                    td=autor.paisOrigen
-                                    td
-                                    a(href=`/autor/autorPais/${paisOrigen}`) autor por pais
-
-            div(class="container")
-                script(src="/js/autor.js", type="text/javascript") 
+                    tr 
+                        td=autor.id
+                        td=autor.nombre                        
+                        td=autor.paisOrigen
+                        td 
+                            a(href=`/autor/del/${autor.id}`) borrar 
+                        td 
+                            a(href=`/autor/edit/${autor.id}`) editar
+                        td 
+                            a(href=`/autor/autoresPorPais/${autor.paisOrigen}`) Autor por pais
+    p 
+        a(href="/autor/add") Añadir un autor nuevo

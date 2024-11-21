@@ -94,31 +94,27 @@ exports.autoresEdit = (req, res) => {
 //Maestro detalle autores 
 
 exports.autoresPorPais = (req, res) => {
-  if (isNaN(req.params.id))
-    res.send('Error al buscar al autor')
-  else {
-    db.query(
-      'SELECT * FROM `autor` ',
-      (error) => {
-        if (!error) {            
-            db.query('SELECT * FROM autor WHERE paisOrigen = ? ',
-              [req.params.id],
-              (err, listaAutores) => {
-                if (err) res.send('ERROR al hacer la consulta')
-                else {
-                  res.render('autores/clientesPorPais', 
-                    { 
-                      nombre: listaAutores, 
-                      paisOrigen: req.params.paisOrigen, 
-                      idAutor: listaAutores , 
-                    user: req.session.user})
-                }
-              }
-            );
-          } else {
-            res.send('No hay ningún autor de este país');
-          }        
+  db.query(
+    'SELECT * FROM `autores` ',
+    (error, listaPautores) => {
+      if (!error) {
+        db.query('SELECT * FROM `autores` WHERE paisOrigen = ? ',
+          [req.params.paisOrigen],
+          (err, listaAutores) => {
+            if (err) res.send('ERROR al hacer la consulta')
+            else {
+              res.render('autor/autorPorPais',
+                {
+                  paisOrigen: req.params.paisOrigen,
+                  listaAutores: listaAutores,
+                  listaPautores: listaPautores
+                })
+            }
+          }
+        );
+      } else {
+        res.send('No hay ningún autor');
       }
-    );
-  };
+    }
+  );
 };
