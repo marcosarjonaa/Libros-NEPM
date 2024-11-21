@@ -10,7 +10,7 @@ block content
             form(id="autorForm")
                 p Seleccione otro país para ver las id de los autores que coinciden: 
                 select.form-select(name="paisOrigen" id="paisOrigen") 
-                    each autor in listaAutores
+                    each autor in listaPautores
                         if autor.paisOrigen == paisOrigen
                             option(value=`${autor.paisOrigen}` selected) #{autor.paisOrigen}
                         else 

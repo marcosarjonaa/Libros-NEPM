@@ -92,13 +92,12 @@ exports.autoresEdit = (req, res) => {
 };
 
 //Maestro detalle autores 
-
 exports.autoresPorPais = (req, res) => {
   db.query(
-    'SELECT * FROM `autores` ',
+    'SELECT * FROM `autores`',
     (error, listaPautores) => {
       if (!error) {
-        db.query('SELECT * FROM `autores` WHERE paisOrigen = ? ',
+        db.query('SELECT DISTINCT * FROM `autores` WHERE paisOrigen = ? ',
           [req.params.paisOrigen],
           (err, listaAutores) => {
             if (err) res.send('ERROR al hacer la consulta')
