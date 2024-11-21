@@ -541,4 +541,4 @@ Para hacer el maestro detalle de autor , es el mismo planteamiento que con clien
 
 ---
 
-### Hecho por Daniel Cornejo y Marcos Arjona
+### Hecho por Daniel Cornejo y Marcos Arjona 2ºDAM A
