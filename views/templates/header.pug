@@ -15,3 +15,22 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
       a.nav-link(href="/ventas") Ventas
     li.nav-item
       a.nav-link(href="/login") Cerrar Sesión
+
+h2 Gestión Libreria
+nav
+      ul
+        li
+          a(href="/") Inicio
+        //- if user
+        li
+          a(href="/libros") Libros
+        li 
+          a(href="/clientes") Clientes
+        li 
+          a(href="/autor") Autores
+        li 
+          a(href="/ventas") Ventas
+        //- else
+          li
+            a(href="/login") Iniciar Sesión
+
