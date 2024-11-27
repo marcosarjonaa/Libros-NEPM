@@ -460,7 +460,7 @@ block content
 
 Para los pug de clientes, libros y ventas solo hay que modificar ligeramente los datos pero la estructura sigue siendo la misma mostrada anteriormente.
 
-### 7º Maestro detalle
+### 7º Primer Maestro detalle
 En el list de clientes hemos planteado el maestro detalle para que podamos ver los clientes y toda su información según su nombre. 
 
 Si hay 8 personas llamadas Laura , se mostrará la información de esas 8 personas. 
@@ -537,6 +537,119 @@ Y en el clientesController hemos puesto:
 };
 ```
 
+### 8º Segundo Maestro detalle
+
+En el list de autores hemos planteado un maestro detalle que nos permita ver a los autores y toda su información según su país de origen.
+
+Por ejemplo si hay 3 autores de Estados Unidos (USA) se mostrará la información de estos autores.
+
+Para conseguir esto, en el controller de autores hemos añadido lo siguiente:
+```js
+//Maestro detalle autores 
+exports.autoresPorPais = (req, res) => {
+  db.query(
+    'SELECT * FROM `autores`',
+    (error, listaPautores) => {
+      if (!error) {
+        db.query('SELECT DISTINCT * FROM `autores` WHERE paisOrigen = ? ',
+          [req.params.paisOrigen],
+          (err, listaAutores) => {
+            if (err) res.send('ERROR al hacer la consulta')
+            else {
+              res.render('autor/autorPorPais',
+                {
+                  paisOrigen: req.params.paisOrigen,
+                  listaAutores: listaAutores,
+                  listaPautores: listaPautores
+                })
+            }
+          }
+        );
+      } else {
+        res.send('No hay ningún autor');
+      }
+  }
+);
+}
+```
+
+También en el routes de autor hemos añadido lo siguiente:
+
+```js
+router.get('/autoresPorPais/:paisOrigen', autorController.autoresPorPais)
+```
+
+Y finalmente en un pug llamado autorPorPais hemos puesto lo siguiente:
+
+```pug
+ div
+        h3 Listado de autores por país 
+            each autor in listaAutores
+                if autor.paisOrigen == paisOrigen
+                    #{autor.paisOrigen}
+        div 
+            form(id="autorForm")
+                p Seleccione otro país para ver las id de los autores que coinciden: 
+                select.form-select(name="paisOrigen" id="paisOrigen") 
+                    each autor in listaPautores
+                        if autor.paisOrigen == paisOrigen
+                            option(value=`${autor.paisOrigen}` selected) #{autor.paisOrigen}
+                        else 
+                            option(value=`${autor.paisOrigen}`) #{autor.paisOrigen}
+        br
+        div
+            table
+                thead 
+                    tr
+                        th id
+                        th nombre 
+                        th paisOrigen
+                tbody 
+                    each autor in listaAutores
+                        tr 
+                            td=autor.id
+                            td=autor.nombre                        
+                            td=autor.paisOrigen
+
+    script(src="/js/autor.js" type="text/javascript") 
+```
+### 9º Adición de Bootstrap para mejorar el aspecto de la página
+
+Para que todo se vea de una forma más bonita haremos uso de bootstrap para ello añadiremos lo siguiente en todos los pug:
+
+```pug
+block head
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
+```
+
+También en las listas añadimos esto para que la tabla con la información se vea de una
+forma elegante:
+
+```pug
+div.container.mt-4
+        h3 Listado de clientes <!--Cambiar el nombre dependiendo de la lista -->
+        table.table.table-bordered.table-hover
+            thead.thead-dark 
+```
+
+Además para que los botones de Borrar, Editar y Maestro detalle se vean mejor aplicamos lo siguiente:
+
+```pug
+ td 
+                            a.btn.btn-danger.btn-sm(href=`/clientes/del/${cliente.id}`) Borrar 
+                        td 
+                            a.btn.btn-warning.btn-sm(href=`/clientes/edit/${cliente.id}`) Editar
+                        td 
+                            a.btn.btn-info.btn-sm(href=`/clientes/clientesNombre/${cliente.nombre}`) Clientes por Nombre 
+    p 
+        a.btn.btn-primary(href="/clientes/add") Añadir un cliente nuevo
+```
+
+De aquí para el resto de listas solo hay que cambiar el nombre, por ejemplo para la de autores cambiaremos todas las partes en las que pone cliente, y así con las demás.
+=======
 Para hacer el maestro detalle de autor , es el mismo planteamiento que con cliente pero cambiando las variables necesarias.
 
 ---

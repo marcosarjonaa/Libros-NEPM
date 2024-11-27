@@ -1,27 +1,30 @@
-
 extends ../templates/layout
-
+block head
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
 block content
 
-        div 
-            h3 Listado de ventas
-            table(border=1)
-                thead 
-                    tr
-                        th id
-                        th fecha
-                        th total
-                        th borrar 
-                        th editar
-                tbody 
-                    each vent in venta
-                        tr 
-                            td=vent.id
-                            td=vent.fecha                       
-                            td=vent.total
-                            td 
-                                a(href=`/ventas/del/${vent.id}`) borrar 
-                            td 
-                                a(href=`/ventas/edit/${vent.id}`) editar 
-            p 
-                a(href="/ventas/add") Añadir una venta nueva
+    div.container.mt-4
+        h3 Listado de ventas
+        table.table.table-bordered.table-hover
+            thead.thead-dark
+                tr
+                    th id
+                    th fecha
+                    th total
+                    th borrar 
+                    th editar
+            tbody 
+                each vent in venta
+                    tr 
+                        td=vent.id
+                        td=vent.fecha                       
+                        td=vent.total
+                        td 
+                            a.btn.btn-danger.btn-sm(href=`/ventas/del/${venta.id}`) Borrar
+                        td 
+                            a.btn.btn-warning.btn-sm(href=`/ventas/edit/${venta.id}`) Editar
+        p 
+            a.btn.btn-primary(href="/ventas/add") Añadir una venta nueva

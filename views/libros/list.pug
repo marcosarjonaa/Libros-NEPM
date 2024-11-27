@@ -1,29 +1,34 @@
-
 extends ../templates/layout
 
-block content
+block head
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
 
-        div 
-            h3 Listado de libros
-            table(border=1)
-                thead 
-                    tr
-                        th id
-                        th titulo
-                        th fPublicacion
-                        th precio
-                        th borrar 
-                        th editar
-                tbody 
-                    each libro in libros
-                        tr 
-                            td=libro.id
-                            td=libro.titulo                        
-                            td=libro.fPublicacion
-                            td=libro.precio
-                            td 
-                                a(href=`/libros/del/${libro.id}`) borrar 
-                            td 
-                                a(href=`/libros/edit/${libro.id}`) editar 
-            p 
-                a(href="/libros/add") Añadir un libro nuevo
+block content
+    div.container.mt-4
+        h3 Listado de libros
+        table.table.table-bordered.table-hover
+            thead.thead-dark
+                tr
+                    th ID
+                    th Título
+                    th Fecha de Publicación
+                    th Precio
+                    th Borrar
+                    th Editar
+            tbody 
+                each libro in libros
+                    tr 
+                        td= libro.id
+                        td= libro.titulo                        
+                        td= libro.fPublicacion
+                        td= libro.precio
+                        td 
+                            a.btn.btn-danger.btn-sm(href=`/libros/del/${libro.id}`) Borrar 
+                        td 
+                            a.btn.btn-warning.btn-sm(href=`/libros/edit/${libro.id}`) Editar 
+        p 
+            a.btn.btn-primary(href="/libros/add") Añadir un libro nuevo
+
