@@ -1,32 +1,36 @@
-
 extends ../templates/layout
-
+block head
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
 block content
 
-        div 
-            h3 Listado de clientes
-            table(border=1)
-                thead 
-                    tr
-                        th id
-                        th nombre
-                        th correo
-                        th borrar 
-                        th editar
-                        th Maestro detalle
-                tbody 
-                    each cliente in clientes 
-                        tr 
-                            td=cliente.id
-                            td=cliente.nombre                        
-                            td=cliente.correo
-                            td 
-                                a(href=`/clientes/del/${cliente.id}`) borrar 
-                            td 
-                                a(href=`/clientes/edit/${cliente.id}`) editar
-                            td 
-                                a(href=`/clientes/clientesNombre/${cliente.nombre}`) Clientes por nombre 
-            p 
-                a(href="/clientes/add") Añadir un cliente nuevo
+    div.container.mt-4
+        h3 Listado de clientes
+        table.table.table-bordered.table-hover
+            thead.thead-dark 
+                tr
+                    th id
+                    th nombre
+                    th correo
+                    th borrar 
+                    th editar
+                    th Maestro detalle
+            tbody 
+                each cliente in clientes 
+                    tr 
+                        td=cliente.id
+                        td=cliente.nombre                        
+                        td=cliente.correo
+                        td 
+                            a.btn.btn-danger.btn-sm(href=`/clientes/del/${cliente.id}`) Borrar 
+                        td 
+                            a.btn.btn-warning.btn-sm(href=`/clientes/edit/${cliente.id}`) Editar
+                        td 
+                            a.btn.btn-info.btn-sm(href=`/clientes/clientesNombre/${cliente.nombre}`) Clientes por Nombre 
+    p 
+        a.btn.btn-primary(href="/clientes/add") Añadir un cliente nuevo
 
-        script(src="/js/clientes.js" type="text/javascript") 
+
+    script(src="/js/clientes.js" type="text/javascript") 
