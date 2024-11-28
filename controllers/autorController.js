@@ -35,7 +35,7 @@ exports.autoresDelFormulario = (req, res) => {
       if (error) res.send('Error al intentar borrar el autor');
       else {
         if (respuesta.length > 0) {
-          res.render('autor/del', { libro: respuesta[0] });
+          res.render('autor/del', { autores: respuesta[0] });
         } else {
           res.send('Error al intentar borrar el autor, no existe');
         }
