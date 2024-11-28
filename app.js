@@ -21,7 +21,6 @@ const app = express();
 const port = process.env.SERVICE_PORT;
 
 app.use(express.static('public'));
-/**
 
 /**
  * Configuramos el motor de plantillas 

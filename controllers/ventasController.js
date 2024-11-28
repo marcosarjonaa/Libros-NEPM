@@ -88,12 +88,12 @@ exports.ventasEdit = (req, res) => {
     res.send('ERROR ACTUALIZANDO venta');
   } else {
     db.query(
-      'UPDATE ventas SET fecha = ?, total = ? WHERE id = ?',
+      'UPDATE venta SET fecha = ?, total = ? WHERE id = ?',
       [id, fecha, total],
       (error) => {
         if (error) {
           res.send('ERROR ACTUALIZANDO venta: ' + error);
-        } else res.redirect('/venta');
+        } else res.redirect('/ventas');
       }
     );
   }
