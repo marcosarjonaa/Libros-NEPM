@@ -4,7 +4,7 @@ USE `libreria`;
 
 DROP TABLE IF EXISTS libros;
 DROP TABLE IF EXISTS autores;
-DROP TABLE IF EXISTS ventas;
+DROP TABLE IF EXISTS venta;
 DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS ventas_libro;
 
@@ -43,14 +43,6 @@ CREATE TABLE venta (
 	fecha DATE NOT NULL,
 	total DECIMAL(10, 2) NOT NULL
 );
-
--- CREATE TABLE venta_libro (
--- 	id_venta INT NOT NULL,
--- 	id_libro INT NOT NULL,
--- 	PRIMARY KEY (id_venta, id_libro),
--- 	FOREIGN KEY (id_venta) REFERENCES venta(id),
--- 	FOREIGN KEY (id_libro) REFERENCES libros(id)
--- );
 
 
 -- para que los acentos salgan bien
