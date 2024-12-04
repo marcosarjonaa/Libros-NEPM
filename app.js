@@ -75,7 +75,7 @@ app.use('/auth', authRoutes);
 app.use('/autor', autorRoutes);
 app.use('/clientes', clientesRoutes);
 app.use('/libros', libreriaRoutes);
-app.use('/venta', ventasRoutes);
+app.use('/ventas', ventasRoutes);
 
 
 
