@@ -10,7 +10,7 @@ exports.libros = (req, res) => {
       // Aquí recorremos los libros y formateamos las fechas
       response.forEach(libro => {
         if (libro.fPublicacion) { 
-          libro.fPublicacion = moment(libro.fPublicacion).format('YYYY-MM-DD');
+          libro.fPublicacion = moment(libro.fPublicacion).format("YYYY-MM-DD");
         }
       });
       res.render('libros/list', { libros: response });
@@ -46,6 +46,10 @@ exports.libroDelFormulario = (req, res) => {
       if (error) res.send('Error al intentar borrar el libro');
       else {
         if (respuesta.length > 0) {
+          const libros = respuesta[0];
+          if (libros.fPublicacion) {
+            libros.fPublicacion = moment(libros.fPublicacion).format('YYYY-MM-DD');
+          }
           res.render('libros/del', { libro: respuesta[0] });
         } else {
           res.send('Error al intentar borrar el libro, no existe');
@@ -69,24 +73,33 @@ exports.libroDel = (req, res) => {
 // Formulario para editar un libro
 exports.libroEditFormulario = (req, res) => {
   const { id } = req.params;
-  if (isNaN(id)) res.send('PARAMETROS INCORRECTOS');
-  else
+  if (isNaN(id)) {
+    res.send('PARAMETROS INCORRECTOS');
+  } else {
     db.query('SELECT * FROM libros WHERE id=?', [id], (error, respuesta) => {
-      if (error) res.send('ERROR al INTENTAR ACTUALIZAR EL libro');
-      else {
+      if (error) {
+        res.send('ERROR al INTENTAR ACTUALIZAR EL libro');
+      } else {
         if (respuesta.length > 0) {
-          res.render('libros/edit', { libro: respuesta[0] });
+          const libro = respuesta[0];
+          // Asegúrate de que la fecha esté en el formato correcto
+          if (libro.fPublicacion) {
+            libro.fPublicacion = moment(libro.fPublicacion).format('YYYY-MM-DD');
+          }
+          res.render('libros/edit', { libro });
         } else {
           res.send('ERROR al INTENTAR ACTUALIZAR EL libro, NO EXISTE');
         }
       }
     });
+  }
 };
+
+
 
 // Editar un libro
 exports.libroEdit = (req, res) => {
   const { id, titulo, fPublicacion, precio } = req.body;
-
   if (isNaN(id)) {
     res.send('ERROR ACTUALIZANDO libro');
   } else {

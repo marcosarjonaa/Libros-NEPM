@@ -43,6 +43,10 @@ exports.ventasDelFormulario = (req, res) => {
       if (error) res.send('Error al intentar borrar el cliente');
       else {
         if (respuesta.length > 0) {
+          const venta = respuesta[0];
+          if (venta.fecha) {
+            venta.fecha = moment(venta.fecha).format('YYYY-MM-DD');
+          }
           res.render('venta/del', { venta: respuesta[0] });
         } else {
           res.send('Error al intentar borrar la venta, no existe');
@@ -64,24 +68,32 @@ exports.ventasDel = (req, res) => {
 };
 
 // Formulario para editar una venta
-exports.ventasEditFormulario = (req, res) => {
+exports.ventaEditFormulario = (req, res) => {
   const { id } = req.params;
-  if (isNaN(id)) res.send('PARAMETROS INCORRECTOS');
-  else
+  if (isNaN(id)) {
+    res.send('PARAMETROS INCORRECTOS');
+  } else {
     db.query('SELECT * FROM venta WHERE id=?', [id], (error, respuesta) => {
-      if (error) res.send('ERROR al INTENTAR ACTUALIZAR LA venta');
-      else {
+      if (error) {
+        res.send('ERROR al INTENTAR ACTUALIZAR LA venta');
+      } else {
         if (respuesta.length > 0) {
-          res.render('venta/edit', { venta: respuesta[0] });
+          const venta = respuesta[0];
+          // Asegúrate de que la fecha esté en el formato correcto
+          if (venta.fecha) {
+            venta.fecha = moment(venta.fecha).format('YYYY-MM-DD');
+          }
+          res.render('venta/edit', { venta });
         } else {
           res.send('ERROR al INTENTAR ACTUALIZAR LA venta, NO EXISTE');
         }
       }
     });
+  }
 };
 
-// Editar un venta
-exports.ventasEdit = (req, res) => {
+// Editar una venta
+exports.ventaEdit = (req, res) => {
   const { id, fecha, total } = req.body;
 
   if (isNaN(id)) {
@@ -89,7 +101,7 @@ exports.ventasEdit = (req, res) => {
   } else {
     db.query(
       'UPDATE venta SET fecha = ?, total = ? WHERE id = ?',
-      [id, fecha, total],
+      [fecha, total, id],
       (error) => {
         if (error) {
           res.send('ERROR ACTUALIZANDO venta: ' + error);

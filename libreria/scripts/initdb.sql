@@ -9,14 +9,15 @@ DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS ventas_libro;
 
 -- para los logins 
-CREATE TABLE  users (
+CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  `password` VARCHAR(255) NOT NULL, 
+  `enabled` BOOL,
+  tipo ENUM('CLIENTE' , 'ADMIN') 
 );
-
-INSERT INTO `users` (`username`, `password`)
-	VALUES ('pepe', 'Secreto_123');
+INSERT INTO `users` (`id`, `username`, `password`, `enabled`, `tipo`) VALUES
+(1,	'marda',	'$2a$10$.1Op/U.7n9PoNLlcf1vN3O08N690kP/TBO5Pmj.P9k7IBmirB//cS',	1,	2);
 
 CREATE TABLE libros (
 	id INT AUTO_INCREMENT PRIMARY KEY, 

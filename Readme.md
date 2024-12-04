@@ -649,9 +649,179 @@ Además para que los botones de Borrar, Editar y Maestro detalle se vean mejor a
 ```
 
 De aquí para el resto de listas solo hay que cambiar el nombre, por ejemplo para la de autores cambiaremos todas las partes en las que pone cliente, y así con las demás.
-=======
-Para hacer el maestro detalle de autor , es el mismo planteamiento que con cliente pero cambiando las variables necesarias.
 
----
+### 10º Adición del login
 
+Para entrar a la página web hemos implementado un login que se mostrará al iniciar la aplicación, antes que nada para que todo funcione bien debemos encriptar las contraseñas haciendo uso de bycript, tendremos que instalar en nuestro proyecto esa dependencia poniendo lo siguiente en el terminal: 
+
+```bash
+npm install bcrypt
+```
+
+Tras eso añadiremos los pug login, register y mensaje en la carpeta views viendose de la siguiente manera:
+
+  ## login.pug
+
+  ```pug 
+block content
+    .container 
+        h1 INICIA SESION 
+        form(action="/auth/login", method="post") 
+            
+            label.form-label(for="username") Usuario
+            input.form-control(type="text", name="username", id="username")
+            br
+            
+            label.form-label(for="password") Contraseña
+            input.form-control(type="password", name="password" id="password")
+            br
+            
+            
+            button.btn.btn-primary(type="submit") Sign in!
+            
+        p ¿Sin usuario? Regístrese 
+            a(href="/auth/register") aquí.
+  ```
+
+  ## register.pug 
+
+```pug
+block content
+    .container 
+        h1 Alta en el sistema
+
+        form.row.g-3(action="/auth/register", method="post") 
+            
+            .col-md-6
+                label.form-label(for="username") Usuario
+                input.form-control(type="text", name="username", id="username", required)
+                label.form-label(for="password") Contraseña
+                input.form-control(type="password", name="password" id="password", required)
+                br            
+            .col-12
+            button.btn.btn-success(type="submit") Sign up!
+```
+## mensaje.pug
+
+```bash
+extends templates/layout
+
+block content
+    .container
+        h3= mensajePagina 
+        a(href="/") Volver al inicio
+```
+
+También necesitaremos añadir en la carpeta routes y controllers el apartado loginRoutes y loginControllers respectivamente
+
+## loginRoutes.js
+```js
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/loginController');
+
+
+router.get('/register', authController.registerForm);
+
+router.post('/register', authController.register);
+
+router.get('/login', authController.loginForm);
+
+router.post('/login', authController.login);
+
+router.get('/logout', authController.logout);
+
+module.exports=router;
+
+```
+## loginController.js
+```js
+const bcrypt = require('bcrypt');
+const db = require('../db');
+
+
+exports.registerForm = (req, res) =>{
+    res.render('register');
+};
+
+exports.register = (req, res) =>{
+    const datosUsuario = req.body;
+    datosUsuario.tipo='CLIENTE'
+    datosUsuario.password= bcrypt.hashSync(datosUsuario.password, 10);
+    try {
+            // guardamos el usuario en la BBDD SIN ACTIVAR
+        db.query(
+            'INSERT INTO users (username, password, enabled, tipo) VALUES (?,?,?,?)',
+            [datosUsuario.username, datosUsuario.password, 1, 'CLIENTE'],
+            (error, respuesta) => {
+                if (error) res.send('ERROR INSERTANDO usuario' + req.body)
+                else res.render('mensaje', {tituloPagina:'Registro usuarios', mensajePagina: 'Usuario registrado'});
+        }
+      );                
+    } catch (error) {
+        res.render('mensaje', {tituloPagina:'ERROR', mensajePagina: 'Error ' + error});
+    }   
+};
+
+exports.loginForm = (req, res) =>{
+    res.render('login');
+};
+
+exports.login = (req, res)=>{
+    const {username, password} = req.body;
+
+    db.query(
+        'SELECT * from users WHERE username=?',
+        [username],
+        (error, rsUsuario) => {
+            if (error) {
+                res.render('mensaje', {tituloPagina:'LOGIN', mensajePagina: 'Usuario no encontrado'});
+            } else {
+                const usuario = rsUsuario[0];
+                if (usuario) {
+                    if (usuario.enabled==1 && bcrypt.compareSync(password, usuario.password)){
+                        req.session.user = usuario.username;
+                        res.redirect('/');
+                    } else {                       
+                        res.render('mensaje', {tituloPagina:'LOGIN', mensajePagina: 'Usuario desactivado'});
+                    }
+                } else {
+                    res.render('mensaje', {tituloPagina:'LOGIN', mensajePagina: 'Usuario no encontrado o credenciales inválidas'});
+                }
+            }
+        }
+    )    
+};
+
+exports.logout = (req, res)=>{
+    req.session.destroy();
+    res.redirect('/auth/login');
+};
+
+```
+En la base de datos tendremos una tabla especifica para los users que pueden acceder al login viendose de la siguiente manera:
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL, 
+  `enabled` BOOL,
+  tipo ENUM('CLIENTE' , 'ADMIN') 
+);
+```
+
+Y su respectivo Insert con una contraseña cifrada:
+
+
+```sql
+/**
+INSERT TABLA USERS
+*/
+INSERT INTO `users` (`id`, `username`, `password`, `enabled`, `tipo`) VALUES
+(1,	'marda',	'$2a$10$.1Op/U.7n9PoNLlcf1vN3O08N690kP/TBO5Pmj.P9k7IBmirB//cS',	1,	2);
+```
+
+USUARIO: marda
+CONTRASEÑA: libreriamarda
 ### Hecho por Daniel Cornejo y Marcos Arjona 2ºDAM A

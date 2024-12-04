@@ -14,7 +14,7 @@ router.get('/del/:id', ventasController.ventasDelFormulario);
 router.post('/del/:id', ventasController.ventasDel);
 
 // Rutas para editar un libro
-router.get('/edit/:id', ventasController.ventasEditFormulario);
-router.post('/edit/:id', ventasController.ventasEdit);
+router.get('/edit/:id', ventasController.ventaEditFormulario);
+router.post('/edit/:id', ventasController.ventaEdit);
 
 module.exports = router;
